@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Parcel Scanner Simulation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .logo {
+      width: 150px;
+      margin-bottom: 30px;
+    }
+
+    .main-label {
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .sub-label {
+      font-size: 20px;
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .reset-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 14px;
+      padding: 8px 16px;
+      background-color: #dc3545;
+    }
+
+    .reset-button:hover {
+      background-color: #b02a37;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="app">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo" class="logo" />
+    <div class="main-label">Scan Next Parcel</div>
+    <button onclick="next()">Next</button>
+    <button class="reset-button" onclick="reset()">Reset</button>
+  </div>
+
+  <audio id="bleep-sound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+
+  <script>
+    const outcomes = [
+      "Tote 1", "Tote 2", "Tote 3", "Tote 4", "Tote 5",
+      "Tote 6", "Tote 7", "Tote 8", "Tote 9",
+      "Damaged", "Fraud", "Problem Solve"
+    ];
+
+    const bleep = document.getElementById('bleep-sound');
+
+    function getRandomOutcome() {
+      const index = Math.floor(Math.random() * outcomes.length);
+      return outcomes[index];
+    }
+
+    function next() {
+      bleep.currentTime = 0;
+      bleep.play();
+
+      const outcome = getRandomOutcome();
+      const app = document.getElementById('app');
+
+      app.innerHTML = `
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo" class="logo" />
+        <div class="main-label">${outcome}</div>
+        <div class="sub-label">Scan Next Parcel</div>
+        <button onclick="next()">Next</button>
+        <button class="reset-button" onclick="reset()">Reset</button>
+      `;
+    }
+
+    function reset() {
+      const app = document.getElementById('app');
+
+      app.innerHTML = `
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo" class="logo" />
+        <div class="main-label">Scan Next Parcel</div>
+        <button onclick="next()">Next</button>
+        <button class="reset-button" onclick="reset()">Reset</button>
+      `;
+    }
+  </script>
+</body>
+</html>
